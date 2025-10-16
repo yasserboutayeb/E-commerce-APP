@@ -1,0 +1,44 @@
+<div class="container py-4">
+  <h2 class="mb-4 text-center text-orange">🛒 Available Products</h2>
+
+  <div class="row">
+    <div class="col-md-4 mb-4" *ngFor="let product of paginatedProducts">
+      <div class="card h-100 shadow-sm border-0">
+        <img [src]="'http://localhost:8090/images/' + product.imgURL" class="card-img-top product-img" alt="{{ product.name }}">
+        <div class="card-body d-flex flex-column">
+          <h5 class="card-title text-orange">{{ product.name }}</h5>
+          <p class="card-text text-secondary small">{{ product.description }}</p>
+          <p class="text-muted mb-1">💲<strong>{{ product.price | currency }}</strong></p>
+          <p class="mb-2" [ngClass]="{ 'text-danger': product.stock === 0, 'text-success': product.stock > 0 }">
+            Stock: {{ product.stock }}
+          </p>
+          <button 
+            class="btn btn-outline-dark mt-auto"
+            [disabled]="isAddToCartDisabled(product)"
+            (click)="addToCart(product)">
+            <i class="bi bi-cart-plus me-1"></i>
+            {{ product.stock === 0 ? 'Out of Stock' : 'Add to Cart' }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="d-flex justify-content-center mt-4">
+    <button 
+      class="btn btn-outline-dark" 
+      (click)="previousPage()" 
+      [disabled]="currentPage === 1">
+      Previous
+    </button>
+    <span class="mx-3">
+      Page {{ currentPage }} of {{ totalPages }}
+    </span>
+    <button 
+      class="btn btn-outline-dark" 
+      (click)="nextPage()" 
+      [disabled]="currentPage === totalPages">
+      Next
+    </button>
+  </div>
+</div>

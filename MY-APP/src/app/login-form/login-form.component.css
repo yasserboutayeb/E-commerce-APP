@@ -1,0 +1,14 @@
+.obs-login {
+  background-color: #fff;
+  border: 2px solid #ffa500;
+  max-width: 400px;
+}
+
+.text-orange {
+  color: #ffa500;
+}
+
+.text-orange:hover {
+  color: #000;
+  text-decoration: underline;
+}

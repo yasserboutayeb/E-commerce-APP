@@ -1,0 +1,38 @@
+
+.obs-navbar {
+  background-color: #000;
+}
+
+.obs-navbar .nav-link {
+  color: #ffa500 !important;
+  transition: color 0.3s ease, transform 0.3s ease; /* 🆕 added transform */
+}
+
+.obs-navbar .nav-link:hover {
+  color: #ff6a00 !important;
+  transform: translateY(-2px); /* 🆕 subtle hover effect */
+}
+
+.obs-navbar .navbar-brand {
+  color: #ff6a00 !important;
+  font-weight: bold;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.obs-navbar .navbar-brand:hover {
+  color: #ffa500 !important;
+  transform: scale(1.05); 
+}
+
+.badge {
+  font-size: 0.7rem;
+  padding: 4px 6px;
+}
+
+.badge {
+  transition: transform 0.3s ease;
+}
+
+.nav-link:hover .badge {
+  transform: scale(1.1);
+}

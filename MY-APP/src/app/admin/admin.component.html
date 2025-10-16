@@ -1,0 +1,92 @@
+<div class="container mt-4">
+  <h2 class="text-orange">User Management</h2>
+
+  <button class="btn btn-primary mb-3" (click)="showUserForm = !showUserForm">
+    {{ showUserForm ? 'Cancel' : 'Add User' }}
+  </button>
+
+  <div *ngIf="showUserForm" class="card p-3 mb-4">
+    <input class="form-control mb-2" type="email" placeholder="Email" [(ngModel)]="newUser.email" />
+    <input class="form-control mb-2" type="password" placeholder="Password" [(ngModel)]="newUser.password" />
+    <button class="btn btn-success me-2" (click)="createUser()">Save</button>
+    <button class="btn btn-secondary" (click)="resetUserForm()">Cancel</button>
+  </div>
+
+  <table class="table table-bordered table-striped">
+    <thead class="table-dark">
+      <tr>
+        <th>Email</th>
+        <th>Role</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of paginatedUsers">
+        <td>{{ user.email }}</td>
+        <td>{{ user.role || 'User' }}</td>
+        <td>
+          <button class="btn btn-warning btn-sm me-2" (click)="editUser(user)">Edit</button>
+          <button class="btn btn-danger btn-sm" (click)="deleteUser(user.id!)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <nav>
+    <ul class="pagination">
+      <li class="page-item" *ngFor="let page of [].constructor(userTotalPages); let i = index">
+        <a class="page-link" (click)="changeUserPage(i + 1)">{{ i + 1 }}</a>
+      </li>
+    </ul>
+  </nav>
+
+  <hr />
+
+  <h2 class="text-orange">Product Management</h2>
+
+  <button class="btn btn-primary mb-3" (click)="showProductForm = !showProductForm">
+    {{ showProductForm ? 'Cancel' : 'Add Product' }}
+  </button>
+
+  <div *ngIf="showProductForm" class="card p-3 mb-4">
+    <input class="form-control mb-2" placeholder="Name" [(ngModel)]="newProduct.name" />
+    <input class="form-control mb-2" placeholder="Price" type="number" [(ngModel)]="newProduct.price" />
+    <input class="form-control mb-2" placeholder="Description" [(ngModel)]="newProduct.description" />
+    <input class="form-control mb-2" placeholder="Stock" type="number" [(ngModel)]="newProduct.stock" />
+    <input class="form-control mb-2" placeholder="Image URL" [(ngModel)]="newProduct.imgURL" />
+    <button class="btn btn-success me-2" (click)="createProduct()">Save</button>
+    <button class="btn btn-secondary" (click)="resetProductForm()">Cancel</button>
+  </div>
+
+  <table class="table table-bordered table-striped">
+    <thead class="table-dark">
+      <tr>
+        <th>Name</th>
+        <th>Price</th>
+        <th>Description</th>
+        <th>Stock</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let product of paginatedProducts">
+        <td>{{ product.name }}</td>
+        <td>\${{ product.price }}</td>
+        <td>{{ product.description }}</td>
+        <td>{{ product.stock }}</td>
+        <td>
+          <button class="btn btn-warning btn-sm me-2" (click)="editProduct(product)">Edit</button>
+          <button class="btn btn-danger btn-sm" (click)="deleteProduct(product.id)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <nav>
+    <ul class="pagination">
+      <li class="page-item" *ngFor="let page of [].constructor(productTotalPages); let i = index">
+        <a class="page-link" (click)="changeProductPage(i + 1)">{{ i + 1 }}</a>
+      </li>
+    </ul>
+  </nav>
+</div>

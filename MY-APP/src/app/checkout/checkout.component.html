@@ -1,0 +1,47 @@
+<div class="checkout-container p-4 shadow-sm" style="background-color: #fff; border: 2px solid #ffa500; border-radius: 1rem; max-width: 800px; margin: 5rem auto 2rem auto;">
+  
+  <h2 class="text-center mb-4 text-orange">Checkout</h2>
+
+  <div *ngIf="cartItems.length > 0; else emptyCart">
+    <form (ngSubmit)="placeOrder()">
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <label class="form-label">Full Name</label>
+          <input [(ngModel)]="name" name="name" class="form-control" required [class.is-invalid]="submitted && !name" />
+        </div>
+
+        <div class="col-md-6 mb-3">
+          <label class="form-label">Phone Number</label>
+          <input [(ngModel)]="phone" name="phone" class="form-control" required [class.is-invalid]="submitted && !phone" />
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Address</label>
+        <input [(ngModel)]="address" name="address" class="form-control" required [class.is-invalid]="submitted && !address" />
+      </div>
+
+      <ul class="list-group mb-3">
+        <li class="list-group-item" *ngFor="let item of cartItems">
+          <div class="d-flex justify-content-between">
+            <span>{{ item.product.name }} (x{{ item.quantity }})</span>
+            <span>{{ item.product.price * item.quantity }}$</span>
+          </div>
+        </li>
+      </ul>
+
+      <h4 class="text-end">Total: {{ totalPrice }}$</h4>
+
+      <button type="submit" class="btn w-100 mt-3" style="background-color: #000; color: #fff; border: none;">
+        Confirm Purchase
+      </button>
+    </form>
+  </div>
+
+  <ng-template #emptyCart>
+    <p class="text-center mt-4">
+      Your cart is empty. 
+      <a routerLink="/shopping" class="text-orange fw-bold" style="text-decoration: none;">Go shopping</a>.
+    </p>
+  </ng-template>
+</div>
