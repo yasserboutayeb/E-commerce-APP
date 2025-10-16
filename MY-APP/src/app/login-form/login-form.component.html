@@ -1,0 +1,18 @@
+<div class="container obs-login mt-5 p-4 rounded shadow">
+  <h2 class="text-center mb-4">Login</h2>
+  <form (ngSubmit)="login()" novalidate>
+    <div class="mb-3">
+      <label for="email" class="form-label">Email</label>
+      <input [(ngModel)]="email" name="email" id="email" type="email" class="form-control" required />
+    </div>
+    <div class="mb-3">
+      <label for="password" class="form-label">Password</label>
+      <input [(ngModel)]="password" name="password" id="password" type="password" class="form-control" required />
+    </div>
+    <div *ngIf="errorMessage" class="text-danger mb-3">{{ errorMessage }}</div>
+    <button type="submit" class="btn btn-dark w-100">Login</button>
+    <div class="text-center mt-3">
+      <a routerLink="/signup" class="text-orange">Don't have an account? Sign up</a>
+    </div>
+  </form>
+</div>

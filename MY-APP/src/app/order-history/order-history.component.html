@@ -1,0 +1,111 @@
+<div class="container mt-4 text-white">
+  <!-- Loading State -->
+  <div *ngIf="isLoading" class="text-center py-5">
+    <div class="spinner-border text-orange" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+    <h4 class="mt-3 text-orange">Loading Your Orders</h4>
+    <p>Please wait while we fetch your order history...</p>
+  </div>
+
+  <!-- Error State -->
+  <div *ngIf="error && !isLoading" class="alert alert-danger fade-in">
+    <div class="d-flex align-items-center">
+      <i class="bi bi-exclamation-triangle-fill me-3"></i>
+      <div>
+        <h5 class="alert-heading">Oops!</h5>
+        <p class="mb-0">{{ error }}</p>
+        <div class="mt-3">
+          <button *ngIf="error !== 'Please login to view your orders'" 
+                  (click)="refresh()" 
+                  class="btn btn-orange me-2">
+            Retry
+          </button>
+          <a *ngIf="error === 'Please login to view your orders' || error === 'Session expired. Please login again.'" 
+             [routerLink]="['/login']"
+             [queryParams]="{ returnUrl: '/orders' }"
+             class="btn btn-orange">
+            Go to Login
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Orders List -->
+  <div *ngIf="!isLoading && !error" class="fade-in">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h2 class="text-orange mb-0">Your Order History</h2>
+      <button (click)="refresh()" class="btn btn-sm btn-outline-orange">
+        <i class="bi bi-arrow-clockwise"></i> Refresh
+      </button>
+    </div>
+    
+    <div *ngIf="orders.length > 0; else noOrders">
+      <div *ngFor="let order of orders" class="card mb-4 bg-dark text-white border-orange hover-shadow">
+        <div class="card-header bg-dark border-orange d-flex justify-content-between align-items-center">
+          <div>
+            <h5 class="card-title text-orange mb-0">Order #{{ order.id }}</h5>
+            
+          </div>
+          <span class="badge" 
+                [class.bg-success]="order.status === 'Completed'"
+                [class.bg-warning]="order.status === 'Processing'"
+                [class.bg-danger]="order.status === 'Cancelled'">
+            {{ order.status || 'Completed' }}
+          </span>
+        </div>
+        
+        <div class="card-body">
+          <div class="row mb-3">
+            <div class="col-md-6">
+              <p><strong>Order Total:</strong> <span class="text-orange">{{ order.total }} MAD</span></p>
+            </div>
+            <div class="col-md-6 text-md-end">
+              <p><strong>Items:</strong> {{ safeParseItems(order.items).length }}</p>
+            </div>
+          </div>
+          
+          <h6 class="text-orange mb-3">Order Details:</h6>
+          <div class="table-responsive">
+            <table class="table table-dark table-hover">
+              <thead>
+                <tr>
+                  <th>Product</th>
+                  <th>Price</th>
+                  <th>Qty</th>
+                  <th>Subtotal</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of safeParseItems(order.items)">
+                  <td>
+                    <strong>{{ item.product?.name || 'Unknown Product' }}</strong>
+                    <small class="d-block text-muted">SKU: {{ item.product?.sku || 'N/A' }}</small>
+                  </td>
+                  <td>{{ item.product?.price }} $</td>
+                  <td>{{ item.quantity }}</td>
+                  <td class="text-orange">{{ (item.product?.price * item.quantity) }} MAD</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Empty State -->
+    <ng-template #noOrders>
+      <div class="text-center py-5">
+        <i class="bi bi-box-seam display-4 text-orange mb-3"></i>
+        <h3 class="text-orange">No Orders Found</h3>
+        <p class="mb-4">You haven't placed any orders yet.</p>
+        <a [routerLink]="['/products']" class="btn btn-orange btn-lg">
+          <span style="color: orange;">
+            <i class="bi bi-bag me-2"></i>Start Shopping
+          </span>          
+        </a>
+      </div>
+    </ng-template>
+  </div>
+</div>

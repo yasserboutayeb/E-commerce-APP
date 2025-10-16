@@ -1,0 +1,14 @@
+.container {
+    background-color: #1a1a1a;
+    padding: 20px;
+    border-radius: 10px;
+  }
+  
+  .text-orange {
+    color: #ff7900;
+  }
+  
+  .border-orange {
+    border: 1px solid #ff7900;
+  }
+  

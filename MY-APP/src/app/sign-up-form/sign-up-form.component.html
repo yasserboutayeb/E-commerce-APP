@@ -1,0 +1,66 @@
+<form #signupForm="ngForm" (ngSubmit)="onSubmit()" 
+  class="obs-login p-4 rounded shadow-sm" 
+  style="margin: 5rem auto 2rem auto; background-color: #fff; border-radius: 1rem;">
+  
+  <h2 class="text-center mb-4 text-orange">Create an Account</h2>
+
+  <div class="mb-3">
+    <label for="email" class="form-label">Email</label>
+    <input 
+      type="email" 
+      id="email" 
+      name="email" 
+      [(ngModel)]="user.email" 
+      required
+      class="form-control"
+      placeholder="Enter your email"
+      [ngClass]="{ 'is-invalid': signupForm.submitted && !signupForm.controls['email'].valid }"
+    >
+    <div class="invalid-feedback">
+      A valid email is required.
+    </div>
+  </div>
+
+  <!-- Password -->
+  <div class="mb-3">
+    <label for="password" class="form-label">Password</label>
+    <input 
+      type="password" 
+      id="password" 
+      name="password" 
+      [(ngModel)]="user.password" 
+      required
+      minlength="6"
+      class="form-control"
+      placeholder="Enter your password"
+      [ngClass]="{ 'is-invalid': signupForm.submitted && !signupForm.controls['password'].valid }"
+    >
+    <div class="invalid-feedback">
+      Password must be at least 6 characters long.
+    </div>
+  </div>
+
+  <!-- Error Message -->
+  <div *ngIf="errorMessage" class="alert alert-danger">
+    {{ errorMessage }}
+  </div>
+
+  <!-- Submit Button -->
+  <button 
+    type="submit" 
+    [disabled]="signupForm.invalid || isLoading"
+    class="btn w-100"
+    style="background-color: #000; color: #fff; border: none;"
+  >
+    <span *ngIf="!isLoading">Sign Up</span>
+    <span *ngIf="isLoading">Creating account...</span>
+  </button>
+
+  <!-- Login link -->
+  <div class="text-center mt-3">
+    <small class="text-muted">Already have an account?</small>
+    <a routerLink="/login" class="text-orange fw-bold" style="text-decoration: none;">
+      Login
+    </a>
+  </div>
+</form>
